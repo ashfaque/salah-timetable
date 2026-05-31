@@ -1,3 +1,4 @@
+```
 src/                             # **Source code** directory.
 ├── app/                         # **NextJS App Routing**. _(Keep this folder minimal)_
 │   ├── globals.css              # **Global CSS** file.
@@ -38,3 +39,4 @@ src/                             # **Source code** directory.
        │   ├── useSettings.ts
        │   └── useTheme.ts
        └── utils.ts              # **Helpers** for _prayer_ module.
+```
