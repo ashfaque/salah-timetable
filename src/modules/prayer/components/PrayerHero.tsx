@@ -46,14 +46,25 @@ export function PrayerHero({ date, setDate, nextPrayer, currentPrayer, qibla, hi
   };
 
   // 3. Show Skeleton if we are in that 500ms window OR if data is missing
-  const isPastDate = (() => {
+  // const isPastDate = (() => {
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0);
+  //   const selected = new Date(date);
+  //   selected.setHours(0, 0, 0, 0);
+  //   return selected.getTime() < today.getTime();
+  // })();
+  // const showSkeleton = isLoading || !nextPrayer; //|| timeRemaining === "00:00:00";
+  const { isPastDate, isFutureDate } = (() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const selected = new Date(date);
     selected.setHours(0, 0, 0, 0);
-    return selected.getTime() < today.getTime();
+    return {
+      isPastDate: selected.getTime() < today.getTime(),
+      isFutureDate: selected.getTime() > today.getTime(),
+    };
   })();
-  const showSkeleton = isLoading || !nextPrayer; //|| timeRemaining === "00:00:00";
+  const showSkeleton = isLoading || !nextPrayer;
 
   return (
     <div className="flex flex-col items-center justify-center gap-8 w-full max-w-md text-center relative animate-in fade-in zoom-in-95 duration-300">
@@ -97,6 +108,11 @@ export function PrayerHero({ date, setDate, nextPrayer, currentPrayer, qibla, hi
             <div className="py-8 animate-in fade-in slide-in-from-bottom-2">
               <p className="text-xl text-foreground/60 mb-2">Viewing Archive</p>
               <h1 className="text-4xl font-bold tracking-tight opacity-50">Past Date</h1>
+            </div>
+          ) : isFutureDate ? (
+            <div className="py-8 animate-in fade-in slide-in-from-bottom-2">
+              <p className="text-xl text-foreground/60 mb-2">Viewing Schedule</p>
+              <h1 className="text-4xl font-bold tracking-tight opacity-50">Upcoming Date</h1>
             </div>
           ) : (
             <>
