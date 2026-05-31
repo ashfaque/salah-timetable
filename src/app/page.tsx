@@ -72,11 +72,13 @@ export default function Home() {
 
   // Extract Maghrib time for the flip logic
   const maghribTime = prayers?.find((p) => p.name === "Maghrib")?.time;
+  const fajrTime = prayers?.find((p) => p.name === "Fajr")?.time;
 
   const hijriData = useHijriDate({
     date: date || now,
     coords,
     method,
+    fajrTime,
     maghribTime,
     now,
   });

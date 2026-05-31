@@ -13,7 +13,7 @@ interface PrayerHeroProps {
   nextPrayer: { name: string; time: Date } | null;
   currentPrayer: { name: string; time: Date } | null;
   qibla: number;
-  hijriData: { text: string; isEstimated: boolean };
+  hijriData: { text: string; isEstimated: boolean; phase?: string };
 }
 
 export function PrayerHero({ date, setDate, nextPrayer, currentPrayer, qibla, hijriData }: PrayerHeroProps) {
@@ -94,7 +94,8 @@ export function PrayerHero({ date, setDate, nextPrayer, currentPrayer, qibla, hi
         >
           {/* Show tilde ~ if estimated */}
           {hijriData.isEstimated && <span>~</span>}
-          {hijriData.text || "Loading Hijri Date..."}
+          {hijriData.phase && <span className="opacity-70">{hijriData.phase}</span>}
+          <span>{hijriData.text || "Loading Hijri Date..."}</span>
         </span>
 
         {/* DISPLAY QIBLA */}
