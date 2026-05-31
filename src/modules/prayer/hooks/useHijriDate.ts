@@ -10,11 +10,12 @@ interface UseHijriDateProps {
   date: Date;
   coords: Coordinates;
   method: string;
+  fajrTime?: Date;
   maghribTime?: Date;
   now?: Date;
 }
 
-export function useHijriDate({ date, coords, method, maghribTime, now }: UseHijriDateProps) {
+export function useHijriDate({ date, coords, method, fajrTime, maghribTime, now }: UseHijriDateProps) {
   // Return object: Text to display + Status (for UI trust)
   const [state, setState] = useState({ text: "", isEstimated: true });
   // Calculate status on every render (tick)
@@ -24,7 +25,18 @@ export function useHijriDate({ date, coords, method, maghribTime, now }: UseHijr
   // Only flip if we are viewing "Today" AND it is after Maghrib
   const isToday = currentTime.toDateString() === date.toDateString();
   // Safety check for valid maghribTime
-  const isAfterMaghrib = !!(isToday && maghribTime && currentTime > maghribTime);
+  const isAfterMaghrib = !!(isToday && maghribTime && currentTime >= maghribTime);
+
+  // Calculate Phase dynamically (Night vs Day)
+  let phase = "";
+  if (isToday && fajrTime && maghribTime) {
+    // It is Night if we are before Fajr OR after Maghrib
+    const isNight = currentTime < fajrTime || currentTime >= maghribTime;
+    phase = isNight ? "Night of" : "Day of";
+  } else {
+    // For past/future calendar dates, standard convention represents the daylight hours
+    phase = "Day of";
+  }
 
   useEffect(() => {
     if (!coords || typeof window === "undefined") return;
@@ -107,5 +119,6 @@ export function useHijriDate({ date, coords, method, maghribTime, now }: UseHijr
     };
   }, [date, coords, method, isAfterMaghrib]);
 
-  return state;
+  // return state;
+  return { ...state, phase };
 }

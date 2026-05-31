@@ -105,6 +105,8 @@ export const MakruhCard = memo(function MakruhCard({ prayers, coords }: MakruhCa
           </div>
         ))}
       </div>
+      {/* Subtle Disclaimer */}
+      <p className="text-xs text-foreground/40 italic mt-4 text-center max-w-xs leading-relaxed">* Times may vary by local mosque.</p>
     </div>
   );
 });
