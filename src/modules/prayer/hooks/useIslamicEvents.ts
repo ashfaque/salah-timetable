@@ -33,7 +33,14 @@ export function useIslamicEvents(date: Date, method: string, coords: Coordinates
         const data = await res.json();
 
         // The API returns an object where keys are months (1-12). We flatten it into a single array of 365 days.
-        const flatCalendar = Object.values(data.data).flat() as any[];
+        type AladhanApiDay = {
+          date: {
+            hijri: { day: string; month: { number: string; en: string }; year: string };
+            gregorian: { day: string; month: { number: string }; year: string };
+          };
+        };
+
+        const flatCalendar = Object.values(data.data).flat() as AladhanApiDay[];
         const apiEvents: IslamicEvent[] = [];
 
         // 3. Loop through the 365 days and pull out the ones matching our events
@@ -80,7 +87,7 @@ export function useIslamicEvents(date: Date, method: string, coords: Coordinates
     return () => {
       isMounted = false;
     };
-  }, [year, method, coords]);
+  }, [date, year, method, coords]);
 
   return { events, isFetching };
 }

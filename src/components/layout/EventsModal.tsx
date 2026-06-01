@@ -17,7 +17,7 @@ interface EventsModalProps {
 export function EventsModal({ isOpen, onClose, currentDate, method, coords }: EventsModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const { events, isFetching } = useIslamicEvents(currentDate, method, coords);
+  const { events } = useIslamicEvents(currentDate, method, coords);
   const currentYear = currentDate.getFullYear();
   const today = new Date();
   today.setHours(0, 0, 0, 0);
