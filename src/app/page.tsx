@@ -101,7 +101,7 @@ export default function Home() {
       />
       {/* Modals & Drawers */}
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} onOpenEvents={() => setIsEventsOpen(true)} onOpenSettings={() => setIsSettingsOpen(true)} />
-      <EventsModal isOpen={isEventsOpen} onClose={() => setIsEventsOpen(false)} currentDate={date || now} method={method} />
+      <EventsModal isOpen={isEventsOpen} onClose={() => setIsEventsOpen(false)} currentDate={date || now} method={method} coords={coords} />
       {/* The Settings Screen */}
       <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} madhab={madhab} onMadhabChange={toggleMadhab} method={method} onMethodChange={setMethod} />
 

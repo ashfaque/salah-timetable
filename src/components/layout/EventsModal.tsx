@@ -4,18 +4,20 @@ import { useRef, useEffect } from "react";
 import { useIslamicEvents } from "@/modules/prayer/hooks/useIslamicEvents";
 import { formatDate } from "@/lib/date-utils";
 import { CloseIcon } from "@/components/ui/Icon";
+import { Coordinates } from "adhan";
 
 interface EventsModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentDate: Date;
   method: string;
+  coords: Coordinates;
 }
 
-export function EventsModal({ isOpen, onClose, currentDate, method }: EventsModalProps) {
+export function EventsModal({ isOpen, onClose, currentDate, method, coords }: EventsModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const { events, isFetching } = useIslamicEvents(currentDate, method);
+  const { events, isFetching } = useIslamicEvents(currentDate, method, coords);
   const currentYear = currentDate.getFullYear();
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -39,7 +41,7 @@ export function EventsModal({ isOpen, onClose, currentDate, method }: EventsModa
         <div className="flex justify-between items-start mb-2">
           <div>
             <h2 className="text-xl font-bold">Islamic Events {currentYear}</h2>
-            <p className="text-xs text-foreground/50 italic mt-1 h-4">{isFetching ? "Verifying dates with API..." : "* Dates verified with regional data."}</p>
+            <p className="text-xs text-foreground/50 italic mt-1 h-4">* Estimated dates based on your location/method.</p>
           </div>
           <button onClick={onClose} className="p-2 -mr-2 -mt-2 hover:bg-foreground/5 rounded-full text-foreground/70 active:scale-95 transition-transform">
             <CloseIcon className="w-5 h-5" />

@@ -31,18 +31,18 @@ export function getOfflineYearlyEvents(currentGregorianDate: Date, method: strin
   const startHijri = toHijri(year, 1, 1).hy;
   const endHijri = toHijri(year, 12, 31).hy;
 
-  // If method is Jamia (India), Daily offset is -1.
-  // Therefore, the Gregorian Date for a Hijri event happens 1 day LATER.
-  const autoOffset = method === "JamiaUloomIslamia" ? -1 : 0;
+  // South Asia (Jamia) is generally 1 day behind the standard Umm al-Qura calendar.
+  // Therefore, the event happens 1 day LATER on the Gregorian calendar.
+  const gregorianOffset = method === "JamiaUloomIslamia" ? 1 : 0;
   const eventsThisYear: IslamicEvent[] = [];
 
   for (let hy = startHijri; hy <= endHijri; hy++) {
     for (const event of ISLAMIC_EVENTS) {
       const greg = toGregorian(hy, event.month, event.day);
 
-      // Apply Inverse Offset (- (-1) = +1 day)
+      // Apply regional offset directly
       const adjustedGregorian = new Date(greg.gy, greg.gm - 1, greg.gd);
-      adjustedGregorian.setDate(adjustedGregorian.getDate() - autoOffset);
+      adjustedGregorian.setDate(adjustedGregorian.getDate() + gregorianOffset);
 
       if (adjustedGregorian.getFullYear() === year) {
         eventsThisYear.push({
