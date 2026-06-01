@@ -1,6 +1,6 @@
 "use client"; // REQUIRED: Because we use interactivity
 
-import { CalendarIcon, SettingsIcon } from "@/components/ui/Icon";
+import { CalendarIcon, MenuIcon } from "@/components/ui/Icon";
 import { formatInputDate } from "@/lib/date-utils"; // getTimezoneShort
 import { useRef } from "react";
 // import { useTheme } from "@/modules/prayer/hooks/useTheme";
@@ -19,10 +19,10 @@ interface HeaderProps {
   locationSource?: "default" | "ip" | "gps";
   onRetryLocation?: () => void;
   accuracy?: number | null;
-  onOpenSettings?: () => void;
+  onOpenMenu?: () => void;
 }
 
-export function Header({ currentDate, onDateChange, locationSource, onRetryLocation, onOpenSettings }: HeaderProps) {
+export function Header({ currentDate, onDateChange, locationSource, onRetryLocation, onOpenMenu }: HeaderProps) {
   // accuracy
   // const { theme, toggleTheme } = useTheme();
   const dateInputRef = useRef<HTMLInputElement>(null);
@@ -95,8 +95,8 @@ export function Header({ currentDate, onDateChange, locationSource, onRetryLocat
         </div>
 
         {/* Settings Button (Moved here from center) */}
-        <button onClick={onOpenSettings} className="p-2 hover:bg-foreground/5 rounded-full transition-colors active:scale-95 text-foreground/70" aria-label="Settings">
-          <SettingsIcon className="w-5 h-5" />
+        <button onClick={onOpenMenu} className="p-2 hover:bg-foreground/5 rounded-full transition-colors active:scale-95 text-foreground/70" aria-label="Menu">
+          <MenuIcon className="w-5 h-5" />
         </button>
       </div>
 

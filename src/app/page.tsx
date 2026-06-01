@@ -9,6 +9,8 @@ import { usePrayerTimes } from "@/modules/prayer/hooks/usePrayerTimes";
 import { useGeolocation } from "@/modules/prayer/hooks/useGeolocation";
 import { useSettings } from "@/modules/prayer/hooks/useSettings";
 import { SettingsModal } from "@/components/layout/SettingsModal";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { EventsModal } from "@/components/layout/EventsModal";
 import { LocationBadge } from "@/components/ui/LocationBadge";
 import { Toast } from "@/components/ui/Toast";
 import { useOnlineStatus } from "@/modules/prayer/hooks/useOnlineStatus";
@@ -22,7 +24,9 @@ export default function Home() {
   // relative to the real current time while `date` is the user-selected view date.
   const [now, setNow] = useState(new Date());
   // State to control if the Settings Modal is visible
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isEventsOpen, setIsEventsOpen] = useState(false);
   const isOnline = useOnlineStatus();
 
   // Track the current day to detect midnight changes
@@ -93,9 +97,11 @@ export default function Home() {
         locationSource={source} // Pass the status ('gps' | 'ip' | 'default')
         onRetryLocation={requestLocation} // Pass the retry function
         accuracy={accuracy}
-        onOpenSettings={() => setIsSettingsOpen(true)} // Connect the button click to our state
+        onOpenMenu={() => setIsSidebarOpen(true)}
       />
-
+      {/* Modals & Drawers */}
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} onOpenEvents={() => setIsEventsOpen(true)} onOpenSettings={() => setIsSettingsOpen(true)} />
+      <EventsModal isOpen={isEventsOpen} onClose={() => setIsEventsOpen(false)} currentDate={date || now} method={method} coords={coords} />
       {/* The Settings Screen */}
       <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} madhab={madhab} onMadhabChange={toggleMadhab} method={method} onMethodChange={setMethod} />
 
