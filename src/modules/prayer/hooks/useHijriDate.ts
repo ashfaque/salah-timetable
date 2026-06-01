@@ -105,7 +105,7 @@ export function useHijriDate({ date, coords, method, fajrTime, maghribTime, now 
         if (isActive) {
           setState({ text: authoritativeString, isEstimated: false });
         }
-      } catch (err) {
+      } catch {
         // Silent failure: We stay on the estimated fallback.
         // User sees the "~" so they know it's not verified.
         console.warn("Hijri API failed, keeping estimate.");

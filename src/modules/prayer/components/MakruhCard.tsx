@@ -43,7 +43,7 @@ export const MakruhCard = memo(function MakruhCard({ prayers, coords }: MakruhCa
 
     // Calculate the buffer for this user
     return calculateMakruhBuffer(coords.latitude);
-  }, [coords?.latitude]); // Only re-calculate if latitude changes
+  }, [coords]); // Only re-calculate if coords change
 
   if (!prayers) return null;
 

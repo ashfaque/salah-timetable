@@ -133,7 +133,7 @@ export function formatHijriDate(date: Date, adjustment: number = 0): string {
     const monthName = HIJRI_MONTHS[hijri.hm - 1]; // Array is 0-indexed
 
     return `${monthName} ${hijri.hd}, ${hijri.hy} AH`;
-  } catch (e) {
+  } catch {
     return ""; // Safe fallback
   }
 }
